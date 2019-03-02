@@ -13,10 +13,10 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const manager = await lottery.methods.manager().call();
+    const accounts = await web3.eth.getAccounts();
+    const manager = await lottery.methods.manager().call({from: accounts[0]});
     this.setState({manager});
     console.log(manager);
-    const accounts = await web3.eth.getAccounts();
     console.log('Attempting to deploy from account', accounts[0]);
   }
   
