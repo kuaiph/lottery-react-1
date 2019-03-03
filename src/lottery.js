@@ -1,5 +1,6 @@
-import web3 from './web3';
-
+import getWeb3 from './web3';
+//import Web3 from "web3";
+const web3 =  new getWeb3;
 const address = '0x8895B2ed3EF4F4f66d048A3F215aC0DeA9Eb6777';
 
 const abi =[ { constant: true,
@@ -48,5 +49,23 @@ const abi =[ { constant: true,
     type: 'constructor',
     constant: undefined,
     signature: 'constructor' } ];
-
+/*
+ const fetchERC20 = async instance => {
+          let object = {};
+          try {
+            let name = await instance.name.call();
+            let sym = await instance.symbol.call();
+            let totalSupply = await instance.totalSupply.call();
+            object.name = name;
+            object.sym = sym;
+            object.totalSupply = totalSupply.toNumber();
+          } catch (err) {
+            console.log(err);
+            return false;
+          }
+          return object;
+        };
+        
+        export default fetchERC20;
+*/
 export default new web3.eth.Contract(abi,address);

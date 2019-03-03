@@ -1,31 +1,37 @@
-import Web3 from 'web3';
+import Web3 from "web3";
 
-const web3 = new Web3(window.web3.currentProvider);
-
-window.addEventListener('load', async () => {
-    // Modern dapp browsers...
+let getWeb3 = new Promise(async function(resolve, reject) {
+  // Wait for loading completion to avoid race conditions with web3 injection timing.
+  var results;
+  let _web3;
+  try {
     if (window.ethereum) {
-        window.web3 = new Web3(ethereum);
-        try {
-            // Request account access if needed
-            await ethereum.enable();
-            // Acccounts now exposed
-            web3.eth.sendTransaction({/* ... */});
-        } catch (error) {
-            // User denied account access...
-        }
+      _web3 = new Web3(window.ethereum);
+      await window.ethereum.enable();
     }
-    // Legacy dapp browsers...
-    else if (window.web3) {
-        window.web3 = new Web3(web3.currentProvider);
-        // Acccounts always exposed
-        web3.eth.sendTransaction({/* ... */});
+    // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+    else if (typeof window.web3 !== "undefined") {
+      // Use Mist/MetaMask's provider.
+      _web3 = new Web3(window.web3.currentProvider);
+
+      console.log("Injected web3 detected.");
+    } else {
+      // Fallback to localhost if no web3 injection. We've configured this to
+      // use the development console's port by default.
+      var provider = new Web3.providers.HttpProvider(
+        "https://rinkeby.infura.io/v3/727c635298344b37961bb1755114f08b"
+      );
+
+      _web3 = new Web3(provider);
+      console.log("No web3 instance injected, using Infuria web3.");
     }
-    // Non-dapp browsers...
-    else {
-        console.log('Non-Ethereum browser detected. You should consider trying MetaMask!');
-    }
+    results = {
+      web3: _web3
+    };
+    resolve(results);
+  } catch (e) {
+    throw new Error(e.message || e);
+  }
 });
 
-//https://medium.com/metamask/https-medium-com-metamask-breaking-change-injecting-web3-7722797916a8
-export default web3;
+export default getWeb3;
