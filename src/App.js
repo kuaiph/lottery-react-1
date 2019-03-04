@@ -8,7 +8,9 @@ class App extends Component {
   state = {
     manager: "",
      web3: {}, 
-     lottery: {}
+     lottery: {},
+     players: [],
+     balance: ''
   };
 
   async componentDidMount() {
@@ -20,14 +22,20 @@ class App extends Component {
     );
 
     const manager = await lottery.methods.manager().call();
-    this.setState({ manager, web3, lottery });
+    const players = await lottery.methods.getPlayers().call();
+    const balance = await web3.eth.getBalance(lottery.options.address);
+    this.setState({ manager, web3, lottery,players, balance });
   }
 
   render() {
     return (
       <div>
         <h2>Lottery Contract</h2>
-        <p>This contract is managed by {this.state.manager}</p>
+        <p>
+          This contract is managed by {this.state.manager}.
+          There are currently {this.state.players.length} people entered,
+          competiting to win {web3.utils.fromWei(this.state.balance, 'ether')} ether!
+          </p>
       </div>
     );
   }
