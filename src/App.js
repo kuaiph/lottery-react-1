@@ -1,23 +1,28 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import web3 from './web3';
-import lottery from './lottery';
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import getWeb3 from "./web3";
+import contractData from "./lottery";
 
 class App extends Component {
-
   constructor(props) {
     super(props);
 
-    this.state = {manager: '' };
+    this.state = { manager: "", web3: {}, lottery: {} };
   }
 
   async componentDidMount() {
+    console.log(contractData);
+    const { web3 } = await getWeb3;
+    const lottery = new web3.eth.Contract(
+      contractData.abi,
+      contractData.address
+    );
+
     const manager = await lottery.methods.manager().call();
-    this.setState({manager});
-    console.log(manager);
+    this.setState({ manager, web3, lottery });
   }
-  
+
   render() {
     return (
       <div>

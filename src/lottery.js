@@ -1,54 +1,78 @@
-import getWeb3 from './web3';
-//import Web3 from "web3";
-const web3 =  new getWeb3;
-const address = '0x8895B2ed3EF4F4f66d048A3F215aC0DeA9Eb6777';
+const address = "0x8895B2ed3EF4F4f66d048A3F215aC0DeA9Eb6777";
 
-const abi =[ { constant: true,
+const abi = [
+  {
+    constant: true,
     inputs: [],
-    name: 'manager',
-    outputs: [ [Object] ],
+    name: "manager",
+    outputs: [
+      {
+        name: "",
+        type: "address"
+      }
+    ],
     payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    signature: '0x481c6a75' },
-  { constant: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: false,
     inputs: [],
-    name: 'pickWinner',
+    name: "pickWinner",
     outputs: [],
     payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-    signature: '0x5d495aea' },
-  { constant: true,
+    stateMutability: "nonpayable",
+    type: "function"
+  },
+  {
+    constant: true,
     inputs: [],
-    name: 'getPlayers',
-    outputs: [ [Object] ],
+    name: "getPlayers",
+    outputs: [
+      {
+        name: "",
+        type: "address[]"
+      }
+    ],
     payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    signature: '0x8b5b9ccc' },
-  { constant: false,
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    constant: false,
     inputs: [],
-    name: 'enter',
+    name: "enter",
     outputs: [],
     payable: true,
-    stateMutability: 'payable',
-    type: 'function',
-    signature: '0xe97dcb62' },
-  { constant: true,
-    inputs: [ [Object] ],
-    name: 'players',
-    outputs: [ [Object] ],
+    stateMutability: "payable",
+    type: "function"
+  },
+  {
+    constant: true,
+    inputs: [
+      {
+        name: "",
+        type: "uint256"
+      }
+    ],
+    name: "players",
+    outputs: [
+      {
+        name: "",
+        type: "address"
+      }
+    ],
     payable: false,
-    stateMutability: 'view',
-    type: 'function',
-    signature: '0xf71d96cb' },
-  { inputs: [],
+    stateMutability: "view",
+    type: "function"
+  },
+  {
+    inputs: [],
     payable: false,
-    stateMutability: 'nonpayable',
-    type: 'constructor',
-    constant: undefined,
-    signature: 'constructor' } ];
+    stateMutability: "nonpayable",
+    type: "constructor"
+  }
+];
 /*
  const fetchERC20 = async instance => {
           let object = {};
@@ -65,7 +89,10 @@ const abi =[ { constant: true,
           }
           return object;
         };
-        
+
         export default fetchERC20;
 */
-export default new web3.eth.Contract(abi,address);
+export default {
+  abi,
+  address
+};
