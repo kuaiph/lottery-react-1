@@ -5,11 +5,11 @@ import getWeb3 from "./web3";
 import contractData from "./lottery";
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { manager: "", web3: {}, lottery: {} };
-  }
+  state = {
+    manager: "",
+     web3: {}, 
+     lottery: {}
+  };
 
   async componentDidMount() {
     console.log(contractData);
