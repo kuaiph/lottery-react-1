@@ -3,6 +3,8 @@ import logo from "./logo.svg";
 import "./App.css";
 import getWeb3 from "./web3";
 import contractData from "./lottery";
+import Web3 from "web3";
+const web3 = new Web3(window.web3.currentProvider);
 
 class App extends Component {
   state = {
@@ -12,7 +14,6 @@ class App extends Component {
      players: [],
      balance: ''
   };
-
   async componentDidMount() {
     console.log(contractData);
     const { web3 } = await getWeb3;
@@ -26,7 +27,7 @@ class App extends Component {
     const balance = await web3.eth.getBalance(lottery.options.address);
     this.setState({ manager, web3, lottery,players, balance });
   }
-
+ 
   render() {
     return (
       <div>
@@ -34,7 +35,7 @@ class App extends Component {
         <p>
           This contract is managed by {this.state.manager}.
           There are currently {this.state.players.length} people entered,
-          competiting to win {web3.utils.fromWei(this.state.balance, 'ether')} ether!
+          competiting to win { web3.utils.fromWei(this.state.balance, 'ether') } ether! 
           </p>
       </div>
     );
